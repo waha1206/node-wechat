@@ -6,6 +6,7 @@ const app = express()
 
 // 引入 users.js router
 const users = require('./routes/api/users')
+const chats = require('./routes/api/chats')
 
 // mongo DB
 const db = require('./config/keys').mongoURI
@@ -36,6 +37,7 @@ require('./config/passport')(passport) // 直接把 passoprt 傳到 passport.js 
 const port = process.env.PORT || 3000
 
 app.use('/api/user', users)
+app.use('/api/chat', chats)
 
 app.listen(port, () => {
   console.log(`http://127.0.0.1:${port}`)

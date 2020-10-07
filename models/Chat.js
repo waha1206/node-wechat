@@ -2,24 +2,25 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // Creat Schema
-const UserSchema = new Schema({
+const ChatSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
+  },
+  img: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
-    required: [true, '使用者名稱必填']
+    required: true
   },
-  email: {
+  text: {
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  avatar: {
-    type: String
-  },
-  identity: {
-    type: String,
+  imgs: {
+    type: [String],
     required: true
   },
   date: {
@@ -29,4 +30,4 @@ const UserSchema = new Schema({
 })
 
 // eslint-disable-next-line no-undef
-module.exports = User = mongoose.model('users', UserSchema)
+module.exports = Chat = mongoose.model('chats', ChatSchema)
