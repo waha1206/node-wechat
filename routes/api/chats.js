@@ -37,4 +37,60 @@ router.post(
   }
 )
 
+// $router GET api/chat/latest
+// @desc   下拉刷新接口
+// @access private
+router.get(
+  '/latest',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Chat.find()
+      .sort({ date: -1 })
+      .then((chat) => {
+        if (!chat) {
+          res.status(404).json({ 沒有任何消息 })
+        } else {
+          let newChat = []
+          for (let i = 0; i < 3; i++) {
+            if (chat[i] != null) {
+              newChat.push(chat[i])
+            }
+          }
+
+          res.json(newChat)
+        }
+      })
+  }
+)
+
+// $router GET api/chat/:page/:size
+// @desc   上拉加載
+// @access private
+
+router.get(
+  '/:page/:size',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Chat.find()
+      .sort({ date: -1 })
+      .then((chat) => {
+        if (!chat) {
+          res.status(404).json('沒有任何資料')
+        } else {
+          let size = req.params.size
+          let page = req.params.page
+          console.log(page, size)
+          let index = size * (page - 1)
+          let newChat = []
+          for (let i = index; i < size * page; i++) {
+            if (chat[i] != null) {
+              newChat.unshift(chat[i])
+            }
+          }
+          res.json(newChat)
+        }
+      })
+  }
+)
+
 module.exports = router
