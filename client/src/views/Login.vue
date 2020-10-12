@@ -3,6 +3,22 @@
     <div class="title">用戶登錄</div>
     <div class="content">
       <!-- 表單 --- 會經過封裝 -->
+      <form action="">
+        <InputGroup
+          label="帳號"
+          placeholder="請填寫email"
+          v-model="user.email"
+        ></InputGroup>
+        <InputGroup
+          label="密碼"
+          placeholder="請填寫密碼"
+          v-model="user.password"
+          type="password"
+        ></InputGroup>
+      </form>
+      <div class="btn_wrap">
+        <YButton :disabled="isDisable" @click="loginClick">登錄</YButton>
+      </div>
     </div>
     <div class="footer_wrap">
       |<button class="register" @click="$router.push('/register')">
@@ -13,10 +29,47 @@
 </template>
 
 <script>
+import InputGroup from '../components/InputGroup';
+import YButton from '../components/YButton';
 export default {
   name: 'login',
-  components: {}
-}
+  data() {
+    return {
+      user: {
+        email: '',
+        password: ''
+      }
+    };
+  },
+  methods: {
+    loginClick() {
+      var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+      if (!reg.test(this.user.email)) {
+        alert('email的格式錯誤！');
+        return;
+      }
+      this.$axios.post('/api/user/login', this.user).then((res) => {
+        // console.log(res);
+        // 存儲 token
+        const { token } = res.data;
+        localStorage.setItem('chatToken', token);
+
+        // 頁面跳轉
+        this.$router.push('/');
+      });
+    }
+  },
+  computed: {
+    isDisable() {
+      if (this.user.email && this.user.password) return false;
+      else return true;
+    }
+  },
+  components: {
+    InputGroup,
+    YButton
+  }
+};
 </script>
 
 <style lang="css" scoped>
@@ -48,5 +101,10 @@ export default {
   border: none;
   background-color: transparent;
   color: #7bc8a9;
+}
+
+.content,
+.btn_wrap {
+  margin-top: 30px;
 }
 </style>
