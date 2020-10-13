@@ -7,6 +7,11 @@
         :title="cellData.title"
         :path="cellData.path"
       ></Cell>
+      <Cell
+        :src="searchData.src"
+        :title="searchData.title"
+        :path="searchData.path"
+      ></Cell>
     </div>
   </div>
 </template>
@@ -24,7 +29,7 @@ export default {
         path: '/moments'
       },
       searchData: {
-        src: 'pyq.jpg',
+        src: 'search.jpg',
         title: '查詢資料',
         path: '/search'
       }
