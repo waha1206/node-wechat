@@ -22,6 +22,11 @@ export default {
         src: 'pyq.jpg',
         title: '朋友圈',
         path: '/moments'
+      },
+      searchData: {
+        src: 'pyq.jpg',
+        title: '查詢資料',
+        path: '/search'
       }
     };
   },
