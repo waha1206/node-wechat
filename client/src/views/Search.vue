@@ -1,6 +1,6 @@
 <template>
   <div class="circle">
-    <Header title="商品搜尋" btn_icon="camera" :isLeft="true"></Header>
+    <Header title="搜尋" btn_icon="camera" :isLeft="true"></Header>
     <!-- 內聯定義 class -->
     <div class="container" :class="{ ac: classA, 'a-b': classB }">
       <div class="title">

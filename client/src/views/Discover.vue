@@ -12,13 +12,18 @@
         :title="searchData.title"
         :path="searchData.path"
       ></Cell>
+      <Cell
+        :src="ToDoData.src"
+        :title="ToDoData.title"
+        :path="ToDoData.path"
+      ></Cell>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '../components/Header';
-import Cell from '../components/Cell';
+import Header from '../components/Header'
+import Cell from '../components/Cell'
 export default {
   name: 'discover',
   data() {
@@ -32,14 +37,19 @@ export default {
         src: 'search.jpg',
         title: '查詢資料',
         path: '/search'
+      },
+      ToDoData: {
+        src: 'add.png',
+        title: '動態新增',
+        path: '/todo'
       }
-    };
+    }
   },
   components: {
     Header,
     Cell
   }
-};
+}
 </script>
 
 <style scoped>

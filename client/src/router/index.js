@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Index from '../views/Index.vue';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Index from '../views/Index.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -49,28 +49,33 @@ const routes = [
     path: '/moments',
     name: 'moments',
     component: () => import('../views/Moments.vue')
-	},
-	{
+  },
+  {
     path: '/search',
     name: 'search',
     component: () => import('../views/Search.vue')
+  },
+  {
+    path: '/todo',
+    name: 'todo',
+    component: () => import('../views/Todo.vue')
   }
-];
+]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
+})
 
 // 路由守衛
 router.beforeEach((to, from, next) => {
-  const isLogin = localStorage.chatToken ? true : false;
+  const isLogin = localStorage.chatToken ? true : false
   if (to.path == '/login' || to.path == '/register') {
-    next();
+    next()
   } else {
-    isLogin ? next() : next('/login');
+    isLogin ? next() : next('/login')
   }
-});
+})
 
-export default router;
+export default router
