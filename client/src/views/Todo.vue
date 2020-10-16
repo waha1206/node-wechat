@@ -25,6 +25,26 @@
           ></li>
         </ul>
       </div>
+      <div class="checkbox">
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+        <label for="mike">Mike</label>
+        <br />
+        <span>Checked names: {{ checkedNames }}</span>
+      </div>
+      <div class="select">
+        <select v-model="selected">
+          <option
+            v-for="(option, index) in options"
+            :key="index"
+            :value="option.value"
+            >{{ option.text }}</option
+          >
+        </select>
+      </div>
     </div>
   </div>
 </template>
@@ -43,13 +63,23 @@ export default {
   },
   data() {
     return {
+      selected: 'A',
+      options: [
+        {
+          text: 'SS001',
+          value: 'A'
+        },
+        { text: 'SS002', value: 'B' },
+        { text: 'SS003', value: 'C' }
+      ],
       newTodoText: '',
       nextTodoId: 4,
       todos: [
         { id: 1, title: '第一個' },
         { id: 2, title: '第二個' },
         { id: 3, title: '第三個' }
-      ]
+      ],
+      checkedNames: []
     }
   },
 
@@ -68,7 +98,9 @@ export default {
 </script>
 
 <style scoped>
-.title {
+.title,
+.checkbox,
+.select {
   margin: 20px;
   text-align: center;
 }

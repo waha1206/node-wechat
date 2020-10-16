@@ -9,7 +9,7 @@
       </div>
       <!-- 定義 class 在 data 裡面 -->
       <div class="search" :class="classObj">
-        <input v-model="getMessage" type="text" />
+        <input v-model.trim="getMessage" type="text" />
         <p :style="PStyle">{{ message }}</p>
       </div>
     </div>
