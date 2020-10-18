@@ -17,6 +17,11 @@
         :title="ToDoData.title"
         :path="ToDoData.path"
       ></Cell>
+      <Cell
+        :src="DiscoverSlot.src"
+        :title="DiscoverSlot.title"
+        :path="DiscoverSlot.path"
+      ></Cell>
     </div>
   </div>
 </template>
@@ -42,6 +47,11 @@ export default {
         src: 'add.png',
         title: '動態新增',
         path: '/todo'
+      },
+      DiscoverSlot: {
+        src: 'slot.png',
+        title: '插槽',
+        path: '/discover-slot-demo'
       }
     }
   },

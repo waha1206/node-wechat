@@ -1,7 +1,7 @@
 <template>
   <div class="circle">
     <Header title="增加品項" btn_icon="camera" :isLeft="true"></Header>
-    <div class="container">
+    <div class="container" :style="{ fontSize: postFontSize + 'em' }">
       <div class="add">
         <form @submit.prevent="addNewTodo">
           <label for="new-todo">新增一個新品項</label>
@@ -16,13 +16,19 @@
           <button>新增品項</button>
         </form>
         <ul>
-          <li
-            is="todo-item"
+          <!--
+						@largeFonts="postFontSize += $event"
+						另外一種就是在 methods: 裡面給他一個函數，另外把子組件傳送過來的參數帶進去
+						@largeFonts="functionName"
+						functionName(參數) {}
+					 -->
+          <TodoItem
             v-for="(item, index) in todos"
             :key="item.id"
             :title="item.title"
             @remove="todos.splice(index, 1)"
-          ></li>
+            @largeFonts="postFontSize += $event"
+          ></TodoItem>
         </ul>
       </div>
       <div class="checkbox">
@@ -44,6 +50,8 @@
             >{{ option.text }}</option
           >
         </select>
+        <CustomizedInput v-model="searchText" />
+        {{ searchText }}
       </div>
     </div>
   </div>
@@ -53,13 +61,15 @@
 import Header from '../components/Header'
 import CellView from '../components/CellView'
 import TodoItem from '../components/TodoItem'
+import CustomizedInput from '../components/CustomizedInput'
 
 export default {
   name: 'todo',
   components: {
     Header,
     CellView,
-    TodoItem
+    TodoItem,
+    CustomizedInput
   },
   data() {
     return {
@@ -79,7 +89,9 @@ export default {
         { id: 2, title: '第二個' },
         { id: 3, title: '第三個' }
       ],
-      checkedNames: []
+      checkedNames: [],
+      postFontSize: 1,
+      searchText: ''
     }
   },
 

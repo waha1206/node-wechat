@@ -59,6 +59,11 @@ const routes = [
     path: '/todo',
     name: 'todo',
     component: () => import('../views/Todo.vue')
+  },
+  {
+    path: '/discover-slot-demo',
+    name: 'discover-slot-demo',
+    component: () => import('../views/DiscoverSlotDemo.vue')
   }
 ]
 
