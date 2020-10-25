@@ -1,7 +1,7 @@
 <template>
   <div class="cell_circle">
     <div class="img_wrapper">
-      <img src="momentsObj.img" alt="" />
+      <img :src="momentsObj.img" alt="" />
     </div>
     <div class="content_wrapper">
       <div class="cell_name">
@@ -14,7 +14,7 @@
         <img
           v-for="(item, index) in momentsObj.imgs"
           :key="index"
-          src=""
+          :src="item"
           alt=""
         />
       </div>
@@ -28,7 +28,7 @@ export default {
   props: {
     momentsObj: Object
   }
-};
+}
 </script>
 
 <style scoped>

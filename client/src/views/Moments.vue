@@ -1,8 +1,13 @@
 <template>
   <div class="circle">
-    <Header title="朋友圈" btn_icon="camera" :isLeft="true"></Header>
-    <div class="container">
-      <div class="scroll-wrap">
+    <Header
+      title="朋友圈"
+      btn_icon="camera"
+      :isLeft="true"
+      @rightClick="$router.push('/publish')"
+    ></Header>
+    <div class="container" ref="container">
+      <Scroll ref="refresh" @pulldown="loadData" @pullup="loadMore">
         <div class="head_wrapper">
           <div class="user_head">
             <span>{{ user.name }}</span>
@@ -18,7 +23,8 @@
             :momentsObj="moment"
           ></CellView>
         </div>
-      </div>
+      </Scroll>
+
       <!-- <div>
         <button @click="btnClick">按我一下</button>
         <input type="text" v-model="message" />
@@ -30,9 +36,11 @@
 </template>
 
 <script>
-import Header from '../components/Header';
-import CellView from '../components/CellView';
-import jwt_decode from 'jwt-decode';
+import Header from '../components/Header'
+import CellView from '../components/CellView'
+import jwt_decode from 'jwt-decode'
+import Scroll from '../components/Scroll'
+
 export default {
   name: 'moments',
   data() {
@@ -40,44 +48,82 @@ export default {
       // 測試用
       // message: '請輸入文字',
       // num: Number(0)
-      momentsList: []
-    };
+      momentsList: [],
+      page: 2, // 默認第二頁開始加載
+      size: 3, // 每次加載 3 條數據
+      loading: false
+    }
+  },
+  mounted() {
+    console.log('container', this.$refs.container.offsetHeight)
+  },
+  updated() {
+    // console.log('scroll', this.$refs.scroll.offsetHeight)
   },
   methods: {
     // 測試用的
     btnClick() {
-      console.log('methods');
-      this.num += 1;
-      console.log(this.num);
+      console.log('methods')
+      this.num += 1
+      console.log(this.num)
+    },
+    loadData() {
+      this.page = 2
+      this.getLatestData()
+    },
+    loadMore() {
+      if (this.loading) return
+      this.loading = true
+      this.$axios(`/api/chat/${this.page}/${this.size}`).then(res => {
+        this.loading = false
+        // console.log(res.data)
+        const result = [...res.data]
+        console.log(result)
+
+        if (result.length > 0) {
+          result.forEach(item => {
+            this.momentsList.push(item)
+          })
+          // 自增 page
+          this.page++
+          console.log('momentsList', this.momentsList)
+        }
+      })
     },
     getLatestData() {
-      this.$axios('/api/chat/latest').then((res) => {
-        this.momentsList = [...res.data];
-        console.log(this.momentsList);
-      });
+      if (this.loading) return
+      this.loading = true
+      this.$axios('/api/chat/latest').then(res => {
+        this.loading = false
+        this.momentsList = [...res.data]
+        console.log(this.momentsList)
+        // 註冊事件，解決重置問題
+        // this.$refs.refresh.$emit('refreshX')
+      })
     }
   },
   created() {
-    this.getLatestData();
+    this.getLatestData()
   },
   computed: {
     user() {
-      const token = localStorage.chatToken;
+      const token = localStorage.chatToken
       // 解析 token
-      const decode = jwt_decode(token);
-      return decode;
+      const decode = jwt_decode(token)
+      return decode
     },
     // 測試用
     msg() {
-      console.log('我是computed');
-      return this.message;
+      console.log('我是computed')
+      return this.message
     }
   },
   components: {
     Header,
-    CellView
+    CellView,
+    Scroll
   }
-};
+}
 </script>
 
 <style scoped>
