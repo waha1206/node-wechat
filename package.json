@@ -6,9 +6,10 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "client": "npm start --prefix client",
+    "socket": "nodemon webSocket.js",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run socket\" \"npm run client\""
   },
   "author": "waha",
   "license": "ISC",
@@ -25,7 +26,8 @@
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
     "eslint-config-prettier": "^6.12.0",
