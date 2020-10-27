@@ -29,8 +29,10 @@
 </template>
 
 <script>
-import InputGroup from '../components/InputGroup';
-import YButton from '../components/YButton';
+import InputGroup from '../components/InputGroup'
+import YButton from '../components/YButton'
+import jwt_decode from 'jwt-decode'
+
 export default {
   name: 'login',
   data() {
@@ -39,37 +41,44 @@ export default {
         email: '',
         password: ''
       }
-    };
+    }
   },
   methods: {
     loginClick() {
-      var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+      var reg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
       if (!reg.test(this.user.email)) {
-        alert('email的格式錯誤！');
-        return;
+        alert('email的格式錯誤！')
+        return
       }
-      this.$axios.post('/api/user/login', this.user).then((res) => {
+      this.$axios.post('/api/user/login', this.user).then(res => {
         // console.log(res);
         // 存儲 token
-        const { token } = res.data;
-        localStorage.setItem('chatToken', token);
+        // 執行到這邊就是登入成功
+        const { token } = res.data
+        localStorage.setItem('chatToken', token)
+
+        // 解析 token
+        const decode = jwt_decode(token)
+
+        // 存儲到 vuex 中
+        this.$store.dispatch('setUser', decode)
 
         // 頁面跳轉
-        this.$router.push('/');
-      });
+        this.$router.push('/')
+      })
     }
   },
   computed: {
     isDisable() {
-      if (this.user.email && this.user.password) return false;
-      else return true;
+      if (this.user.email && this.user.password) return false
+      else return true
     }
   },
   components: {
     InputGroup,
     YButton
   }
-};
+}
 </script>
 
 <style lang="css" scoped>
