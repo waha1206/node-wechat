@@ -22,6 +22,11 @@
         :title="DiscoverSlot.title"
         :path="DiscoverSlot.path"
       ></Cell>
+      <Cell
+        :src="AboutVuex.src"
+        :title="AboutVuex.title"
+        :path="AboutVuex.path"
+      ></Cell>
     </div>
   </div>
 </template>
@@ -52,6 +57,11 @@ export default {
         src: 'slot.png',
         title: '插槽',
         path: '/discover-slot-demo'
+      },
+      AboutVuex: {
+        src: 'vuex.png',
+        title: 'Vuex',
+        path: '/about-vuex'
       }
     }
   },

@@ -66,6 +66,11 @@ const routes = [
     component: () => import('../views/DiscoverSlotDemo.vue')
   },
   {
+    path: '/about-vuex',
+    name: 'about-vuex',
+    component: () => import('../views/AboutVuex.vue')
+  },
+  {
     path: '/publish',
     name: 'publish',
     component: () => import('../views/Publish.vue')
