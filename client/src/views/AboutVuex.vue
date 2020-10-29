@@ -3,15 +3,20 @@
     <Header title="VUEX練習" btn_icon="camera" :isLeft="true"></Header>
     <div class="container">
       <div class="title">
-        <button @click="inc">store 加 1</button>
+        <button @click="inc">store 加 10</button>
         {{ this.$store.state.count }}
         <p>這個是 computed {{ count }}</p>
+        <p></p>
         <p>這個是 getrer</p>
         {{ this.$store.getters.doneTodos }}
         <p>通過方法訪問 getter</p>
         {{ this.$store.getters.getTodoById(2) }}
         <p>通過 mapGetters</p>
         {{ getTodoById(1) }}
+        <div>
+          <button @click="actionClick">1000毫秒後觸發 加 30</button>
+          {{ this.$store.count }}
+        </div>
       </div>
     </div>
   </div>
@@ -27,8 +32,13 @@ export default {
     return {}
   },
   methods: {
+    actionClick() {
+      this.$store.dispatch('incrementAsync').then(() => {
+        console.log('加載中...', this.$store.state.count)
+      })
+    },
     inc() {
-      this.$store.commit('increment')
+      this.$store.commit({ type: 'increment', amount: 10 })
     }
   },
   computed: {

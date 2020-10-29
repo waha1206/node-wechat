@@ -2,6 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
 
+// 解決 vue-router 報錯 NavigationDuplicated: Avoided redundant navigation to current l
+
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+// end  解決 vue-router 報錯
+
 Vue.use(VueRouter)
 
 const routes = [
