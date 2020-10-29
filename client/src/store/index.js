@@ -4,7 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const types = {
-  SET_USER: 'SET_USER' // 用戶訊息
+  SET_USER: 'SET_USER', // 用戶訊息
+  SET_ABOUT_VUEX: 'SET_ABOUT_VUEX' // 練習 Vuex
 }
 
 const state = {
@@ -42,7 +43,7 @@ const mutations = {
       user = {}
     }
   },
-  increment(state, payload) {
+  [types.SET_ABOUT_VUEX](state, payload) {
     state.count += payload.amount
   }
 }
@@ -53,7 +54,7 @@ const actions = {
   },
   incrementAsync({ commit }) {
     setTimeout(() => {
-      commit('increment', { amount: 30 })
+      commit(types.SET_ABOUT_VUEX, { amount: 30 })
       console.log('加載結束！', this.state.count)
     }, 1000)
   }
