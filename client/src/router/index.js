@@ -96,6 +96,7 @@ const router = new VueRouter({
 // 路由守衛
 router.beforeEach((to, from, next) => {
   const isLogin = localStorage.chatToken ? true : false
+  console.log('router.js 使用 beforeEach 先去看 loaclStorage 有沒有 token')
   if (to.path == '/login' || to.path == '/register') {
     next()
   } else {
