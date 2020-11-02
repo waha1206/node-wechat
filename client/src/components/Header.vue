@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header-button is-left" v-show="isLeft">
       <i class="fa fa-chevron-left"></i>
-      <button @click="$router.push('/discover')">返回</button>
+      <button @click="jumpTo">返回</button>
     </div>
     <h1 class="header-title">{{ title }}</h1>
     <div class="header-button is-right" v-show="btn_icon">
@@ -17,12 +17,22 @@
 export default {
   name: 'Header',
   props: {
+    path: {
+      type: String,
+      default: '/discover'
+    },
     title: String,
     isLeft: {
       type: Boolean,
       defualt: false
     },
     btn_icon: String
+  },
+  methods: {
+    jumpTo() {
+      console.log(this.path)
+      this.$router.push(this.path)
+    }
   }
 }
 </script>

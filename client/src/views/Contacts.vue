@@ -12,9 +12,10 @@
       <!-- 中間部分 -->
       <div class="content_wrap">
         <Cell
-          v-for="(item, index) in friendsList"
-          :user="item"
+          v-for="(friend, index) in friendsList"
+          :user="friend"
           :key="index"
+          @click="clickCell(friend)"
         ></Cell>
       </div>
       <!-- 下面 -->
@@ -42,6 +43,10 @@ export default {
     this.getFriendsList()
   },
   methods: {
+    clickCell(friend) {
+      this.$store.dispatch('setTargetUser', friend)
+      this.$router.push('information')
+    },
     getFriendsList() {
       this.$axios.get('/api/user/all').then(res => {
         this.friendsList = res.data
