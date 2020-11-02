@@ -8,6 +8,17 @@
     ></Header>
     <div class="container">
       <InfoCell :userInfo="targetUser" />
+      <div class="btn_wrapper">
+        <Y-Button
+          @click="
+            $router.push({
+              name: 'chat',
+              params: { user: targetUser, path: '/information' }
+            })
+          "
+          >發消息</Y-Button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -15,13 +26,14 @@
 <script>
 import Header from '../components/Header'
 import InfoCell from '../components/InfoCell'
+import YButton from '../components/YButton'
 
 export default {
   name: 'information',
   data() {
     return {}
   },
-  components: { Header, InfoCell },
+  components: { Header, InfoCell, YButton },
   computed: {
     targetUser() {
       return this.$store.getters.targetUser
