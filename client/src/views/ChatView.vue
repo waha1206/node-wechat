@@ -19,6 +19,7 @@
 
 <script>
 import Header from '../components/Header'
+import WSocket from '../socket.js'
 
 export default {
   name: 'chat',
@@ -42,9 +43,46 @@ export default {
       console.log(vm.path)
     })
   },
+  computed: {
+    user() {
+      return this.$store.getters.user
+    }
+  },
+  // mounted 頁面渲染之前 會執行的鉤子函數，服務端推送消息給客戶端
+  mounted() {
+    WSocket.init(
+      { user: this.user },
+      message => {
+        // 收到消息後，將消息存儲到數據中
+        this.messageList.push({
+          msg: message.msg,
+          source: 'other'
+        })
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  },
+
   methods: {
     sendMessage() {
-      console.log(this.msgValue)
+      // console.log(this.msgValue)
+      // 需要發送的消息對象
+      const msgObj = {
+        target: this.targetUser._id,
+        current: this.user.id,
+        msg: this.msgValue
+      }
+      WSocket.send(msgObj)
+
+      // 本地客戶端顯示
+      this.messageList.push({
+        msg: this.msgValue,
+        source: 'self'
+      })
+      // 清空 input
+      this.msgValue = ''
     }
   }
 }
