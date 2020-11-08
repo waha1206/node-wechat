@@ -24,6 +24,10 @@ const routes = [
         redirect: '/chats'
       },
       {
+        path: 'index',
+        redirect: '/chats'
+      },
+      {
         path: '/chats',
         name: 'chats',
         component: () => import('../views/Chats')
@@ -37,6 +41,39 @@ const routes = [
         path: '/discover',
         name: 'discover',
         component: () => import('../views/Discover')
+      },
+      {
+        path: '/shop',
+        redirect: '/home',
+        // name: 'shop',
+        component: () => import('../views/shop/Shop.vue'),
+        children: [
+          {
+            path: '/home',
+            name: 'homeView',
+            component: () => import('../components/HomeView/HomeView.vue')
+          },
+          {
+            path: '/assort',
+            name: 'assortView',
+            component: () => import('../components/AssortView/AssortView.vue')
+          },
+          {
+            path: '/search2',
+            name: 'searchView',
+            component: () => import('../components/SearchView/SearchView.vue')
+          },
+          {
+            path: '/cart',
+            name: 'cartView',
+            component: () => import('../components/CartView/CartView.vue')
+          },
+          {
+            path: '/mine',
+            name: 'mineView',
+            component: () => import('../components/MineView/MineView.vue')
+          }
+        ]
       },
       {
         path: '/me',

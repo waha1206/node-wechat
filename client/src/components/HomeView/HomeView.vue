@@ -1,0 +1,11 @@
+<template>
+  <div class="home-view">首頁</div>
+</template>
+
+<script>
+export default {
+  name: 'homeView'
+}
+</script>
+
+<style lang="scss" scoped></style>
