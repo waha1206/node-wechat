@@ -23,7 +23,7 @@ export default {
   props: {
     data: Array
   }
-};
+}
 </script>
 
 <style scoped>

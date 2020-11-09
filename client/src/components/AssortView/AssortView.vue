@@ -4,7 +4,17 @@
 
 <script>
 export default {
-  name: 'assortView'
+  name: 'assortView',
+  data() {
+    return {
+      title: '分類',
+      navViewShow: true
+    }
+  },
+  created() {
+    this.$emit('onTitle', this.title)
+    this.$emit('onNavShow', this.navViewShow)
+  }
 }
 </script>
 

@@ -4,8 +4,20 @@
 
 <script>
 export default {
-  name: 'homeView'
+  name: 'homeView',
+  data() {
+    return {
+      title: '麥毆商城',
+      navViewShow: true
+    }
+  },
+  created() {
+    this.$emit('onTitle', this.title)
+    this.$emit('onNavShow', this.navViewShow)
+  }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url('../../../public/css/temp.css');
+</style>

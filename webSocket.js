@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 
 // 定义websocket服务器
-const wsServer = new WebSocket.Server({ port: 3000 });
+const wsServer = new WebSocket.Server({ port: 3001 });
 
 // 定义连接到的websocket集合
 let socketSet = [];
