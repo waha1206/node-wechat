@@ -131,6 +131,16 @@ const routes = [
     path: '/chat',
     name: 'chat',
     component: () => import('../views/ChatView.vue')
+  },
+  {
+    path: '/img-upload',
+    name: 'img-upload',
+    component: () => import('../views/ImgUpload.vue')
+  },
+  {
+    path: '/csv-upload',
+    name: 'csv-upload',
+    component: () => import('../views/CsvUpload.vue')
   }
 ]
 

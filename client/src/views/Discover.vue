@@ -27,6 +27,16 @@
         :title="AboutVuex.title"
         :path="AboutVuex.path"
       ></Cell>
+      <Cell
+        :src="ImgUpload.src"
+        :title="ImgUpload.title"
+        :path="ImgUpload.path"
+      ></Cell>
+      <Cell
+        :src="CsvUpload.src"
+        :title="CsvUpload.title"
+        :path="CsvUpload.path"
+      ></Cell>
     </div>
   </div>
 </template>
@@ -62,6 +72,16 @@ export default {
         src: 'vuex.png',
         title: 'Vuex',
         path: '/about-vuex'
+      },
+      ImgUpload: {
+        src: 'imgupload.jpg',
+        title: '圖片上傳',
+        path: '/img-upload'
+      },
+      CsvUpload: {
+        src: 'csv.jpg',
+        title: '開啟CSV檔',
+        path: '/csv-upload'
       }
     }
   },
