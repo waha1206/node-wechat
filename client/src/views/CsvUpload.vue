@@ -13,6 +13,10 @@
           <p>開啟CSV檔</p>
           <br />
           <van-button type="danger">上傳資料</van-button>
+          <span>--</span>
+          <van-button type="danger" @click="nextCustomer"
+            >下一個客戶</van-button
+          >
           <br />
           <br />
 
@@ -26,6 +30,10 @@
           <p>檔案大小： {{ fileSize }}</p>
           <p>檔案名稱： {{ fileName }}</p>
           <p>檔案類型： {{ fileType }}</p>
+
+          <p v-for="(item, index) in this.showCustomerData" :key="index">
+            {{ item }}
+          </p>
         </div>
       </div>
     </div>
@@ -47,8 +55,10 @@ export default {
       fileSize: '',
       fileName: '',
       fileType: '',
+      count: 0,
       results: null,
-      dataJSON: null,
+      showCustomerData: [],
+      dataJSON: [],
       fileList: [
         // { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
         // // Uploader 根据文件后缀来判断是否为图片文件
@@ -65,13 +75,19 @@ export default {
     }
   },
   methods: {
+    nextCustomer() {
+      this.count += 1
+      this.showCustomerData = this.dataJSON[this.count]
+      // console.log(this.count)
+    },
     afterRead(file) {
       // console.log(this.fileList[0].content)
       this.fileName = file.file.name
       this.fileSize = file.file.size
       this.fileType = file.file.type
       this.dataJSON = JSON.parse(this.csvJSON(this.fileList[0].content))
-      console.log(this.dataJSON)
+      console.log(this.dataJSON[0])
+      this.showCustomerData = this.dataJSON[0]
 
       // 這裡可以寫上傳伺服器的代碼
 
@@ -84,11 +100,11 @@ export default {
 
       // console.log(lines, headers)
 
-      for (var i = 1; i < lines.length; i++) {
+      for (let i = 1; i < lines.length; i++) {
         const obj = {}
         const currentline = lines[i].split(',')
 
-        for (var j = 0; j < headers.length; j++) {
+        for (let j = 0; j < headers.length; j++) {
           obj[headers[j]] = currentline[j]
         }
 
