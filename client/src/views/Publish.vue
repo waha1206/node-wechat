@@ -12,7 +12,7 @@
         <Upload :loading="loading" @getImgs="getImgs"></Upload>
       </div>
     </div>
-    <Loading :loading="loading" />
+    <Loading :loading="loading" status="上傳圖片中 ..." />
   </div>
 </template>
 

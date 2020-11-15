@@ -7,6 +7,7 @@ const app = express();
 // 引入 users.js router
 const users = require('./routes/api/users');
 const chats = require('./routes/api/chats');
+const customers = require('./routes/api/customers');
 
 // mongo DB
 const db = require('./config/keys').mongoURI;
@@ -42,6 +43,7 @@ const port = process.env.PORT || 3000;
 
 app.use('/api/user', users);
 app.use('/api/chat', chats);
+app.use('/api/customer', customers);
 
 app.listen(port, () => {
   console.log(`http://127.0.0.1:${port}`);

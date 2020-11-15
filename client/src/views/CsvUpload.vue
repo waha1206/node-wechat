@@ -12,7 +12,12 @@
           <!-- 文件上傳 -->
           <p>開啟CSV檔</p>
           <br />
-          <van-button type="danger">上傳資料</van-button>
+          <van-button
+            type="danger"
+            v-if="maxCustomerNum > 0"
+            @click="upLoadData"
+            >上傳資料</van-button
+          >
           <span>--</span>
           <van-button type="danger" @click="nextCustomer"
             >下一個客戶</van-button
@@ -30,7 +35,9 @@
           <p>檔案大小： {{ fileSize }}</p>
           <p>檔案名稱： {{ fileName }}</p>
           <p>檔案類型： {{ fileType }}</p>
-
+          <p v-if="maxCustomerNum > 0">客戶編號： {{ count + 1 }}</p>
+          <p v-if="maxCustomerNum > 0">客戶總數： {{ maxCustomerNum }}</p>
+          <hr />
           <p v-for="(item, index) in this.showCustomerData" :key="index">
             {{ item }}
           </p>
@@ -38,6 +45,7 @@
       </div>
     </div>
     <!-- <Loading :loading="loading" /> -->
+    <Loading :loading="loading" status="上傳數據中..." />
   </div>
 </template>
 
@@ -47,6 +55,7 @@ import Header from '../components/Header'
 // import VuePapaParse from 'vue-papa-parse'
 // Vue.use(VuePapaParse)
 import { Button, Uploader } from 'vant'
+import Loading from '../components/Loading'
 
 export default {
   name: 'csv-upload',
@@ -55,9 +64,12 @@ export default {
       fileSize: '',
       fileName: '',
       fileType: '',
+      loading: false,
+      maxCustomerNum: 0,
       count: 0,
       results: null,
       showCustomerData: [],
+      allCustomerData: [],
       dataJSON: [],
       fileList: [
         // { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
@@ -75,6 +87,13 @@ export default {
     }
   },
   methods: {
+    upLoadData() {
+      this.loading = true
+      this.$axios.post('/api/customer/upload', this.dataJSON).then(res => {
+        this.loading = false
+      })
+    },
+
     nextCustomer() {
       this.count += 1
       this.showCustomerData = this.dataJSON[this.count]
@@ -86,8 +105,9 @@ export default {
       this.fileSize = file.file.size
       this.fileType = file.file.type
       this.dataJSON = JSON.parse(this.csvJSON(this.fileList[0].content))
-      console.log(this.dataJSON[0])
+      // console.log(this.dataJSON[0])
       this.showCustomerData = this.dataJSON[0]
+      console.log(this.dataJSON.length)
 
       // 這裡可以寫上傳伺服器的代碼
 
@@ -98,18 +118,27 @@ export default {
       const result = []
       const headers = lines[0].split(',')
 
-      // console.log(lines, headers)
-
+      // 處理 lines 一共881條
+      // for (let i = 1; i < 100; i++) {
       for (let i = 1; i < lines.length; i++) {
         const obj = {}
         const currentline = lines[i].split(',')
 
+        // 處理 header 一共 17 的欄位
         for (let j = 0; j < headers.length; j++) {
-          obj[headers[j]] = currentline[j]
+          // 移除特定的欄位會出現 /r 的問題
+          if (headers[j].indexOf('postal') != -1) {
+            obj['postal'] = currentline[j].replace('\r', '')
+          } else if (headers[j].indexOf('create_date') != -1) {
+            // 轉換日期，要把原始資料的日期重新設定成 2020/10/22 之類的
+            obj[headers[j]] = Date.parse(currentline[j])
+          } else {
+            obj[headers[j]] = currentline[j]
+          }
         }
-
         result.push(obj)
       }
+      this.maxCustomerNum = lines.length
       return JSON.stringify(result) //JSON
     },
 
@@ -153,6 +182,7 @@ export default {
   },
   components: {
     Header,
+    Loading,
     [Button.name]: Button,
     [Uploader.name]: Uploader
   }

@@ -2,7 +2,7 @@
   <div v-show="loading" class="loading">
 		<div class="load_wrap">
 			<img src="../assets/scroll_load.gif" alt="">
-			<span>加載中 ...</span>
+			<span>{{ status }} ...</span>
 		</div>
 	</div>
 </template>
@@ -14,7 +14,8 @@ props:{
 	loading:{
 		type:Boolean,
 		default:false
-	}
+	},
+	status:''
 }
 }
 </script>
@@ -34,14 +35,14 @@ props:{
 .load_wrap {
   position: absolute;
   width: 50%;
-  height: 40px;
+  height: 2.5rem;
   left: 25%;
   top: 30%;
   text-align: center;
 }
 .load_wrap img {
   width: 1.6rem;
-  margin-right: 8px;
+  margin-right: 0.5rem;
   vertical-align: middle;
 }
 </style>

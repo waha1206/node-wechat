@@ -117,6 +117,8 @@ export default {
   display: inline-block;
 }
 .fl img {
+  width: 2rem;
+  height: 2rem;
   vertical-align: middle;
   margin-right: 0.2rem;
 }
@@ -124,22 +126,22 @@ export default {
 .pulldown,
 .pullup {
   width: 100%;
-  height: 50px;
+  height: 3.125rem;
   position: relative;
   color: #888;
 }
 .clear {
-  padding: 10px 0px;
+  padding: 0.625rem 0px;
   font-size: 0.28rem;
   position: absolute;
   left: 50%;
-  top: 5px;
+  top: 0.3125rem;
   transform: translate(-50%, 0);
 }
 
 .list-donetip {
   text-align: center;
-  line-height: 50px;
+  line-height: 3.125rem;
   font-size: 0.28rem;
 }
 </style>
