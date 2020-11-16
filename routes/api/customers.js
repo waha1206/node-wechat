@@ -64,11 +64,11 @@ router.post(
 // $router GET api/customer/all
 // @desc   取得所有使用者資料
 // @access Private
-router.get(
-  '/all',
+router.post(
+  '/search',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Customer.find({}).then((customers) => {
+    Customer.find({ company: { $regex: req.body.key } }).then((customers) => {
       res.json(customers);
     });
   }

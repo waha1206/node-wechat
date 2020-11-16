@@ -64,6 +64,12 @@ export default {
       ) {
         console.log(this.message)
         this.lastMessage = this.message
+        const searchData = {
+          key: this.lastMessage
+        }
+        this.$axios.post('/api/customer/search', searchData).then(res => {
+          console.log(res.data)
+        })
         // 替換數組
         // 如果資料來源已經在 vue data 裡面 可以用下面方式做過濾資料
         //  example1.items = example1.items.filter(function (item) {
@@ -88,7 +94,7 @@ export default {
     }
   },
   created() {
-    this.DB = _.debounce(this.axiosSearchData, 1000, false)
+    this.DB = _.debounce(this.axiosSearchData, 500, false)
     this.getLatestData()
   },
   computed: {
