@@ -37,6 +37,7 @@
           <p>檔案類型： {{ fileType }}</p>
           <p v-if="maxCustomerNum > 0">客戶編號： {{ count + 1 }}</p>
           <p v-if="maxCustomerNum > 0">客戶總數： {{ maxCustomerNum }}</p>
+          <p v-if="maxCustomerNum > 0">檔案類型： {{ fileClass }}</p>
           <hr />
           <p v-for="(item, index) in this.showCustomerData" :key="index">
             {{ item }}
@@ -64,6 +65,7 @@ export default {
       fileSize: '',
       fileName: '',
       fileType: '',
+      fileClass: '',
       loading: false,
       maxCustomerNum: 0,
       count: 0,
@@ -89,9 +91,25 @@ export default {
   methods: {
     upLoadData() {
       this.loading = true
-      this.$axios.post('/api/customer/upload', this.dataJSON).then(res => {
+      if (this.fileClass == '客戶資料') {
+        console.log('暫時不提供上傳 customer 的資料')
         this.loading = false
-      })
+        return
+        // this.$axios.post('/api/customer/upload', this.dataJSON).then(res => {
+        //   this.loading = false
+        // })
+      } else if (this.fileClass == '原物料資料') {
+        console.log(this.dataJSON)
+        this.loading = false
+        return
+        // 傳到資料庫並且儲存，目前已經有資料了，所以暫時不開啟
+        // this.$axios.post('/api/material/upload', this.dataJSON).then(res => {
+        //   this.loading = false
+        // })
+      } else {
+        console.log('資料類型有誤...')
+        return
+      }
     },
 
     nextCustomer() {
@@ -100,24 +118,34 @@ export default {
       // console.log(this.count)
     },
     afterRead(file) {
-      // console.log(this.fileList[0].content)
+      // 當開啟檔案後，會觸發這個 function vant 元件 van-uploader
       this.fileName = file.file.name
       this.fileSize = file.file.size
       this.fileType = file.file.type
+      // 將 檔案內容從字串轉換成為 JSON object
       this.dataJSON = JSON.parse(this.csvJSON(this.fileList[0].content))
-      // console.log(this.dataJSON[0])
+      // 揭示到畫面上面的第一筆資料
       this.showCustomerData = this.dataJSON[0]
-      console.log(this.dataJSON.length)
-
-      // 這裡可以寫上傳伺服器的代碼
-
-      // console.log(file.file)
+      // console.log(this.showCustomerData)
+      // 這裡可以寫上傳伺服器的代碼，但是我使用另外一個按鈕來取代 upLoadData(){}
     },
     csvJSON(csv) {
       const lines = csv.split('\n')
       const result = []
       const headers = lines[0].split(',')
 
+      // 根據檔頭去判斷是哪種 CSV 的資料
+      if (headers[0] == 'create_date') {
+        this.fileClass = '客戶資料'
+      } else if (headers[0] == 'old_serial_numbers') {
+        this.fileClass = '原物料資料'
+        // console.log(headers)
+        // console.log(lines[3])
+        // console.log(headers.length)
+      } else {
+        this.fileClass = ''
+        return
+      }
       // 處理 lines 一共881條
       // for (let i = 1; i < 100; i++) {
       for (let i = 1; i < lines.length; i++) {
@@ -132,6 +160,8 @@ export default {
           } else if (headers[j].indexOf('create_date') != -1) {
             // 轉換日期，要把原始資料的日期重新設定成 2020/10/22 之類的
             obj[headers[j]] = Date.parse(currentline[j])
+          } else if (headers[j].indexOf('product_website') != -1) {
+            obj['product_website'] = currentline[j].replace('\r', '')
           } else {
             obj[headers[j]] = currentline[j]
           }
@@ -139,10 +169,13 @@ export default {
         result.push(obj)
       }
       this.maxCustomerNum = lines.length
+      // 查看整理好的資料內容 JSON 的格式
+      // console.log(result)
       return JSON.stringify(result) //JSON
     },
 
     saveToServer() {
+      // 右上的按鈕，目前沒有使用到
       console.log('存到資料庫裡')
     },
     publish() {

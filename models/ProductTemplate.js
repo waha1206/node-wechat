@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Creat Schema
-const MaterialSchema = new Schema({
+const ProductTemplateSchema = new Schema({
   create_date: {
     type: Date,
     default: Date.now
@@ -107,4 +107,7 @@ const MaterialSchema = new Schema({
 });
 
 // eslint-disable-next-line no-undef
-module.exports = Material = mongoose.model('materials', MaterialSchema);
+module.exports = ProductTemplate = mongoose.model(
+  'product_templates',
+  ProductTemplateSchema
+);
