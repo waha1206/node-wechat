@@ -141,6 +141,11 @@ const routes = [
     path: '/csv-upload',
     name: 'csv-upload',
     component: () => import('../views/CsvUpload.vue')
+  },
+  {
+    path: '/product-template',
+    name: 'product-template',
+    component: () => import('../views/ProductTemplate.vue')
   }
 ]
 

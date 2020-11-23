@@ -37,6 +37,11 @@
         :title="CsvUpload.title"
         :path="CsvUpload.path"
       ></Cell>
+      <Cell
+        :src="ProductTemplate.src"
+        :title="ProductTemplate.title"
+        :path="ProductTemplate.path"
+      ></Cell>
     </div>
   </div>
 </template>
@@ -82,6 +87,11 @@ export default {
         src: 'csv.jpg',
         title: '開啟CSV檔',
         path: '/csv-upload'
+      },
+      ProductTemplate: {
+        src: 'product.png',
+        title: '公版商品',
+        path: '/product-template'
       }
     }
   },
