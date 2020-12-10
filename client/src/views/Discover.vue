@@ -42,6 +42,11 @@
         :title="ProductTemplate.title"
         :path="ProductTemplate.path"
       ></Cell>
+      <Cell
+        :src="EventBus.src"
+        :title="EventBus.title"
+        :path="EventBus.path"
+      ></Cell>
     </div>
   </div>
 </template>
@@ -92,6 +97,11 @@ export default {
         src: 'product.png',
         title: '公版商品',
         path: '/product-template'
+      },
+      EventBus: {
+        src: 'event-bus.png',
+        title: 'EventBus',
+        path: '/event-bus'
       }
     }
   },

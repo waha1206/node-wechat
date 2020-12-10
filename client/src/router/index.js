@@ -146,6 +146,11 @@ const routes = [
     path: '/product-template',
     name: 'product-template',
     component: () => import('../views/ProductTemplate.vue')
+  },
+  {
+    path: '/event-bus',
+    name: 'event-bus',
+    component: () => import('../views/EventBus/EventBus.vue')
   }
 ]
 

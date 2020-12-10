@@ -13,6 +13,8 @@
         {{ this.$store.getters.getTodoById(2) }}
         <p>通過 mapGetters</p>
         {{ getTodoById(1) }}
+        <p>通過 mapState取得 user</p>
+        {{ user }}
         <div>
           <button @click="actionClick">1000毫秒後觸發 加 30</button>
           {{ this.$store.count }}
@@ -24,7 +26,7 @@
 
 <script>
 import Header from '../components/Header'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'about-vuex',
@@ -43,6 +45,7 @@ export default {
   },
   computed: {
     ...mapGetters(['getTodoById']),
+    ...mapState(['user']),
     count() {
       return this.$store.state.count
     }
