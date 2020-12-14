@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // Creat Schema
 const ChatSchema = new Schema({
@@ -27,7 +27,7 @@ const ChatSchema = new Schema({
     type: Date,
     default: Date.now
   }
-})
+});
 
 // eslint-disable-next-line no-undef
-module.exports = Chat = mongoose.model('chats', ChatSchema)
+module.exports = Chat = mongoose.model('chats', ChatSchema);
