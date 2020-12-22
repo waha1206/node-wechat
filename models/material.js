@@ -26,6 +26,9 @@ const MaterialSchema = new Schema({
   product_category: {
     type: String
   },
+  product_name: {
+    type: String
+  },
   the_cost: {
     type: String
   },

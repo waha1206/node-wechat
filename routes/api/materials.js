@@ -60,10 +60,13 @@ router.post(
       });
       materials.push(material);
     }
+    console.log(materials);
+    res.json('msg:materials works');
+    return;
 
     Material.insertMany(materials)
       .then((ok) => {
-        res.json('msg:chats works');
+        res.json('msg:materials works');
       })
       .catch((err) => {
         return console.log(err);

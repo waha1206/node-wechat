@@ -103,9 +103,9 @@ export default {
         this.loading = false
         return
         // 傳到資料庫並且儲存，目前已經有資料了，所以暫時不開啟
-        // this.$axios.post('/api/material/upload', this.dataJSON).then(res => {
-        //   this.loading = false
-        // })
+        this.$axios.post('/api/material/upload', this.dataJSON).then(res => {
+          this.loading = false
+        })
       } else {
         console.log('資料類型有誤...')
         return
